@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %}Mark Attendance{% endblock %}
+
+{% block content %}
+<head>
+  <title></title>
+  <style>
+    /* General Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
+    color: #333;
+    background: url('/Users/divyasri/Downloads/bgimage3.jpeg') no-repeat center center fixed;
+    background-size: cover; /* Ensures the image covers the entire viewport */
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #2c3e50;
+    color: #fff;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+.camera-container {
+    margin: 20px auto;
+    border: 3px solid #2c3e50;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 90%;
+    max-width: 600px;
+    height: 50vh;
+    background-color: #000;
+}
+
+#videoFeed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.attendance-container, .registration-container {
+    margin: 20px auto;
+    padding: 15px;
+    max-width: 400px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    display: inline-block;
+    padding: 12px 25px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #2c3e50;
+    color: #fff;
+    text-align: center;
+    border-radius: 10px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+  </style>
+</head>
+<div class="container">
+    <header>
+        <h1>Mark Your Attendance</h1>
+        <p>Welcome! Please register or mark your attendance below.</p>
+    </header>
+
+    <div class="camera-container">
+        <video id="videoFeed" autoplay></video>
+    </div>
+
+    {% if face_registered %}
+        <div class="attendance-container">
+            <h2>Your face is registered!</h2>
+            <a href="file:///Users/divyasri/Project/attendance_system/templates/mark%20attendance%20continution%20page.html"><button id="markAttendanceButton" onclick="markAttendance()">Mark Attendance</button></a>
+        </div>
+    {% else %}
+        <div class="registration-container">
+            <h2>Your face is not registered yet!</h2>
+            <a href=""<button id="registerFaceButton" onclick="registerFace()">Register Face</button>
+        </div>
+    {% endif %}
+</div>
+
+<footer>
+    <p>Powered by AI | Secure and Reliable Attendance System</p>
+</footer>
+
+<script>
+    const video = document.getElementById('videoFeed');
+    const markAttendanceButton = document.getElementById('markAttendanceButton');
+    const registerFaceButton = document.getElementById('registerFaceButton');
+
+    // Access the webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+            video.srcObject = stream;
+        })
+        .catch((err) => {
+            console.log('Error accessing webcam: ', err);
+        });
+
+    // Register Face
+    function registerFace() {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = canvas.toDataURL('image/png');
+
+        fetch('/mark-attendance/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({ image: imageData, action: 'register' })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            alert(data.status);
+            if (data.status === "Face registered successfully") {
+                markAttendanceButton.style.display = 'block';
+                registerFaceButton.style.display = 'none';
+            }
+        })
+        .catch((error) => {
+            console.error('Error registering face: ', error);
+        });
+    }
+
+    // Mark Attendance
+    function markAttendance() {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = canvas.toDataURL('image/png');
+
+        fetch('/mark-attendance/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({ image: imageData, action: 'mark' })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            alert(data.status);
+        })
+        .catch((error) => {
+            console.error('Error marking attendance: ', error);
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Marked</title>
+    <style>
+        /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fb; /* Light background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Attendance Container */
+.attendance-container {
+    background-color: #fff; /* White background */
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Checkmark Container */
+.checkmark-container {
+    margin-bottom: 20px;
+    background-color: #e1f9e3; /* Light green background */
+    padding: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkmark SVG Styling */
+.checkmark-container svg {
+    fill: none;
+    stroke: #2f855a; /* Green color for tick */
+    stroke-width: 2;
+    transform: scale(1.5);
+}
+
+/* Checkmark Animation */
+.checkmark {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    animation: drawCheckmark 1s forwards;
+}
+
+/* Animation for Drawing the Checkmark */
+@keyframes drawCheckmark {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Message Styling */
+.message {
+    font-size: 1.2rem;
+    color: #2f855a; /* Green text for confirmation message */
+    font-weight: bold;
+}
+
+    </style>
+</head>
+<body>
+    <div class="attendance-container">
+        <div class="checkmark-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path class="checkmark" d="M20 6L9 17l-5-5"></path>
+            </svg>
+        </div>
+        <p class="message">Your attendance has been marked successfully!</p>
+    </div>
+</body>
+</html>
