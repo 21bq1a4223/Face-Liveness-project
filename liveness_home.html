@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Liveness Attendance System</title>
+  <style>
+    /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('/Users/divyasri/Downloads/bgimage3.jpeg') no-repeat center center fixed; /* Replace with your image path */
+    background-size: cover;
+    color: #fff;
+    margin: 0;
+}
+
+/* Overlay to Darken the Background */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Content Container Styling */
+.content {
+    text-align: center;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background for the content */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Heading Styling */
+h1 {
+    font-size: 3rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: fadeInUp 1s ease-out;
+}
+
+/* Description Styling */
+p {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 30px;
+    animation: fadeInUp 1.5s ease-out;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Button Styling */
+button.btn {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    outline: none;
+}
+
+/* Sign In Button Styling */
+button.btn-signin {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+button.btn-signin:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Sign Up Button Styling */
+button.btn-signup {
+    background-color: #3182ce; /* Blue */
+    color: white;
+}
+
+button.btn-signup:hover {
+    background-color: #2b6cb0;
+    transform: scale(1.05);
+}
+
+/* Button Focus Effect */
+button:focus {
+    outline: none;
+    transform: scale(1.05);
+}
+
+/* Fade-in Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    button.btn {
+        font-size: 1rem;
+        padding: 12px 25px;
+    }
+}
+
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="content">
+      <h1>Face Liveness Attendance System</h1>
+      <p>Secure and reliable attendance tracking with advanced facial recognition technology.</p>
+      <div class="button-container">
+        <a href="file:///Users/divyasri/Project/attendance_system/templates/registration/login.html"><button class="btn btn-signin" onclick="redirectToSignIn()">Sign In</button></a>
+        <a href="file:///Users/divyasri/Downloads/signup.html"><button class="btn btn-signup" onclick="redirectToSignUp()">Sign Up</button></a>
+      </div>
+    </div>
+  </div>
+  <script>
+    function redirectToSignIn() {
+      window.location.href = "signin.html";
+    }
+    function redirectToSignUp() {
+      window.location.href = "signup.html";
+    }
+  </script>
+</body>
+</html>
+
